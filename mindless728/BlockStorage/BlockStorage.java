@@ -11,7 +11,7 @@ public class BlockStorage extends JavaPlugin {
 	
 	public BlockStorage() {
 		pluginStorage = new HashMap<JavaPlugin,PluginBlockStorage<Serializable>>();
-		System.out.println("BlockStorage version 0.0 installed");
+		System.out.println("BlockStorage version 1.0 installed");
 	}
 	
 	public void onEnable() {

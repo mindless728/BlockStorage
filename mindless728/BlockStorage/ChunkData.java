@@ -35,6 +35,7 @@ public class ChunkData {
 		
 		try {
 			out.writeObject(data);
+			out.close();
 		}
 		catch(IOException ioe) {}
 	}
@@ -45,6 +46,7 @@ public class ChunkData {
 		
 		try {
 			data = (Serializable[][][])in.readObject();
+			in.close();
 		}
 		catch(IOException ioe) {}
 		catch(ClassNotFoundException cnfe) {}

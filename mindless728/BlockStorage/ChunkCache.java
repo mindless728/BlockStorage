@@ -56,8 +56,8 @@ public class ChunkCache extends LinkedHashMap<Location,ChunkData> {
 	}
 	
 	public Location getLocationInChunk(Location loc) {
-		int x = (loc.getBlockX() < 0 ? loc.getBlockX() % 16 + 16 : loc.getBlockX() % 16);
-		int z = (loc.getBlockZ() < 0 ? loc.getBlockZ() % 16 + 16 : loc.getBlockZ() % 16);
+		int x = (loc.getBlockX() % 16 < 0 ? loc.getBlockX() % 16 + 16 : loc.getBlockX() % 16);
+		int z = (loc.getBlockZ() % 16 < 0 ? loc.getBlockZ() % 16 + 16 : loc.getBlockZ() % 16);
 		return new Location(loc.getWorld(), x, loc.getBlockY(), z);
 	}
 	
@@ -70,8 +70,9 @@ public class ChunkCache extends LinkedHashMap<Location,ChunkData> {
 	@Override
 	protected boolean removeEldestEntry(Map.Entry<Location,ChunkData> eldest) {
 		boolean ret = size() > maxSize;
-		if(ret && eldest.getValue().isDirty())
+		if(ret && eldest.getValue().isDirty()) {
 			saveChunkDataToDisk(eldest.getKey(), eldest.getValue());
+		}
 		
 		return ret;
 	}

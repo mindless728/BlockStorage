@@ -20,7 +20,7 @@ public class ChunkFileManager {
 	
 	public ChunkFileManager(JavaPlugin p) {
 		pluginName = p.getDescription().getName();
-		basePath = "";
+		basePath = "plugins"+File.separator+"BlockStorage"+File.separator+pluginName+File.separator;
 	}
 	
 	public ObjectInputStream getInputStream(Location loc) {
@@ -56,6 +56,6 @@ public class ChunkFileManager {
 	}
 	
 	public String getFileName(File file, Location loc) {
-		return file.getPath()+pluginName+"-"+loc.getWorld().getName()+"@("+loc.getBlockX()+","+loc.getBlockZ()+")";
+		return file.getPath()+File.separator+pluginName+"-"+loc.getWorld().getName()+"@("+loc.getBlockX()+","+loc.getBlockZ()+")";
 	}
 }
