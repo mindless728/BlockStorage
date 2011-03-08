@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.HashMap;
 
 public class BlockStorage extends JavaPlugin {
@@ -18,6 +19,9 @@ public class BlockStorage extends JavaPlugin {
 	}
 	
 	public void onDisable() {
+		for(Map.Entry<JavaPlugin,PluginBlockStorage<Serializable>> entry : pluginStorage.entrySet())
+			entry.getValue().close();
+		pluginStorage.clear();
 	}
 	
 	@SuppressWarnings("unchecked")
