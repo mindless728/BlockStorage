@@ -12,7 +12,7 @@ public class BlockStorage extends JavaPlugin {
 	
 	public BlockStorage() {
 		pluginStorage = new HashMap<JavaPlugin,PluginBlockStorage<Serializable>>();
-		System.out.println("BlockStorage version 1.0 installed");
+		System.out.println("BlockStorage version 1.3 installed");
 	}
 	
 	public void onEnable() {
@@ -20,18 +20,25 @@ public class BlockStorage extends JavaPlugin {
 	
 	public void onDisable() {
 		for(Map.Entry<JavaPlugin,PluginBlockStorage<Serializable>> entry : pluginStorage.entrySet())
-			entry.getValue().close();
+			try {entry.getValue().close();} catch(NullPointerException npe) {}
 		pluginStorage.clear();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public <T extends Serializable> PluginBlockStorage<T> getPluginBlockStorage(JavaPlugin plugin) {
+		return getPluginBlockStorage(plugin, 16);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable> PluginBlockStorage<T> getPluginBlockStorage(JavaPlugin plugin, int cacheSize) {
 		PluginBlockStorage<T> ret = null;
+		
+		if(!isEnabled())
+			return ret;
 		
 		if(pluginStorage.containsKey(plugin))
 			ret = (PluginBlockStorage<T>)pluginStorage.get(plugin);
 		else {
-			ret = new PluginBlockStorage<T>(plugin);
+			ret = new PluginBlockStorage<T>(plugin,cacheSize);
 			pluginStorage.put(plugin,(PluginBlockStorage<Serializable>)ret);
 		}
 		
