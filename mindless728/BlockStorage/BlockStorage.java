@@ -32,8 +32,8 @@ public class BlockStorage extends JavaPlugin {
 	public <T extends Serializable> PluginBlockStorage<T> getPluginBlockStorage(JavaPlugin plugin, int cacheSize) {
 		PluginBlockStorage<T> ret = null;
 		
-		if(!isEnabled())
-			return ret;
+		//if(!isEnabled())
+			//return ret;
 		
 		if(pluginStorage.containsKey(plugin))
 			ret = (PluginBlockStorage<T>)pluginStorage.get(plugin);
